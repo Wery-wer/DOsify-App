@@ -1,4 +1,4 @@
-# dosify_app
+# DOsify_App
 
 A new Flutter project.
 

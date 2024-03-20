@@ -25,14 +25,34 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     return Scaffold(
       backgroundColor: Color(0xFF3A4D39),
       body: Center(
-        child: Text(
-          'Dosify',
-          style: TextStyle(
-            fontSize: 40,
-            fontWeight: FontWeight.bold,
-            color: Colors.deepPurple,
-          ),
-        )
+        child: Container(
+          width: 300,
+          height: 250,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'DOsify.',
+                  style: TextStyle(
+                    color: Color(0xFFECE3CE),
+                    fontSize: 64,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Organize your tasks easily and efficiently.\n'
+                  'Increase your productivity with a simple\n'
+                  'and intuitive to do list app.',
+                  style: TextStyle(
+                    color: Color(0xFFECE3CE),
+                    fontSize: 15,
+                  ),
+                ),
+              ],
+            ),
+        ),
       ),
     );
   }

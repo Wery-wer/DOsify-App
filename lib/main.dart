@@ -1,3 +1,4 @@
+import 'package:dosify_app/screen/HomePage.dart';
 import 'package:dosify_app/screen/Login.dart';
 import 'package:dosify_app/screen/splashscreen.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const LoginPage(),
+      home: const HomePage(),
     );
   }
 }

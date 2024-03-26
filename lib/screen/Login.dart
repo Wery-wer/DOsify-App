@@ -1,9 +1,9 @@
+import 'package:dosify_app/screen/Registrasi.dart';
 import 'package:dosify_app/utils/constants/colors.dart';
 import 'package:dosify_app/utils/constants/text_string.dart';
 import 'package:dosify_app/widget/PasswordForm.dart';
 import 'package:dosify_app/widget/loginForm.dart';
 import 'package:flutter/material.dart';
-import 'package:dosify_app/widget/CustomTextField.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -95,10 +95,15 @@ class _LoginPageState extends State<LoginPage> {
                       "Don't have account? Sign Up",
                       style: TextStyle(color: GColors.textTitle),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const RegistrasiPage()));
+                    },
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 Container(
                   alignment: Alignment.center,
                   child: Text(
@@ -106,19 +111,24 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(color: GColors.textTitle),
                   ),
                 ),
+                SizedBox(height: 20),
+                Container(
+                  alignment: Alignment.center,
+                  child: InkWell(
+                    child: Image.asset('assets/images/Google.png'),
+                    onTap: () {},
+                  ),
+                ),
                 SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Google",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500),
-                    )
-                  ],
-                )
+                Positioned(
+                    bottom: 0,
+                    left: 0,
+                    child: Image.asset(
+                      'assets/images/LoginImage.png',
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.fill,
+                    ))
               ],
             ),
           ),

@@ -1,3 +1,4 @@
+import 'package:dosify_app/screen/Login.dart';
 import 'package:dosify_app/widget/UsernameForm.dart';
 import 'package:flutter/material.dart';
 import 'package:dosify_app/utils/constants/colors.dart';
@@ -98,10 +99,24 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
                       "Do you have account? Sign Up",
                       style: TextStyle(color: GColors.textTitle),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()));
+                    },
                   ),
                 ),
                 SizedBox(height: 10),
+                Positioned(
+                    bottom: 0,
+                    left: 0,
+                    child: Image.asset(
+                      'assets/images/RegisImage.png',
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.contain,
+                    ))
               ],
             ),
           ),

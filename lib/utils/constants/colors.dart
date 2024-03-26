@@ -4,7 +4,7 @@ class GColors {
   GColors._();
 
   // Background colors
-  static const Color primaryBackground = Color(0x3A4D39);
+  static const Color primaryBackground = Color(0xFF3A4D39);
   static const Color secondaryBackground = Color(0x4F6F52);
 
   // Text Colors

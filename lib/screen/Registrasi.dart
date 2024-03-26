@@ -81,7 +81,7 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
                             borderRadius: BorderRadius.circular(15)),
                         minimumSize: Size(double.infinity, 55)),
                     child: Text(
-                      GTexts.signIn,
+                      GTexts.createAccount,
                       style: TextStyle(
                           fontFamily: 'Poppins',
                           color: GColors.textPrimary,

@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
           // Tambahkan logika yang diinginkan di sini
         },
         child: Icon(
-          Icons.upload_file_outlined,
+          Icons.file_upload_outlined,
           color: Colors.white,
         ),
         backgroundColor: Color(0xFF3A4D39),

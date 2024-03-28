@@ -6,6 +6,7 @@ class GColors {
   // Background colors
   static const Color primaryBackground = Color(0xFF3A4D39);
   static const Color secondaryBackground = Color(0x4F6F52);
+  static const Color teritaryBackground = Color(0xFFF04D23);
 
   // Text Colors
   static const Color textTitle = Color(0xFFECE3CE);

@@ -33,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text(
                       'DOsify.',
                       style: TextStyle(
+                        fontFamily: 'Poppins',
                         color: Color(0xFFECE3CE),
                         fontSize: 50,
                         fontWeight: FontWeight.bold,

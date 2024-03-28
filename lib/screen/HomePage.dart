@@ -18,11 +18,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     initializeDateFormatting();
-    // Panggil fungsi untuk memformat tanggal saat inisialisasi
     fetchDateAndTime();
   }
 
-  // Fungsi untuk memformat tanggal
   void fetchDateAndTime() {
     var now = DateTime.now();
     var formatter = DateFormat('EEEE\nd MMMM', 'id_ID');
@@ -46,8 +44,7 @@ class _HomePageState extends State<HomePage> {
                 fontSize: sizes.GSizes.fontSizeLg,
                 color: Colors.white
               ),
-               // Ubah warna teks menjadi putih
-            ),
+              ),
             ],
           ),
         ),
@@ -95,7 +92,7 @@ class _HomePageState extends State<HomePage> {
           // Tambahkan logika yang diinginkan di sini
         },
         child: Icon(
-          Icons.add,
+          Icons.upload_file_outlined,
           color: Colors.white,
         ),
         backgroundColor: Color(0xFF3A4D39),

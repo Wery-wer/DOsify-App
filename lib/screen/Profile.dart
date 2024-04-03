@@ -188,7 +188,7 @@ class customTextField extends StatelessWidget {
           Text(
             title,
             style: const TextStyle(
-              color: GColors.textTitle, // Ubah warna teks
+              color: Colors.white, // Ubah warna teks
               height: 2,
               fontWeight: FontWeight.bold,
               fontSize: 16,
@@ -203,12 +203,12 @@ class customTextField extends StatelessWidget {
               textAlignVertical: TextAlignVertical.bottom,
               controller: controller,
               decoration: InputDecoration(
-                  fillColor: Colors.white,
+                  fillColor: GColors.textTitle,
                   filled: true,
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: const BorderSide(
-                        color: Color(0xffA9A9A9),
+                        color: GColors.primaryBackground,
                       )),
                   hintText: hintText),
               obscureText: false,

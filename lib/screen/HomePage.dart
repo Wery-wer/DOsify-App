@@ -1,3 +1,4 @@
+import 'package:dosify_app/screen/Profile.dart';
 import 'package:dosify_app/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; 
@@ -40,15 +41,15 @@ class _HomePageState extends State<HomePage> {
             children: [
               Text(
               '$formattedDate',
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Poppins', 
                 fontSize: sizes.GSizes.fontSizeLg,
                 color: Colors.white
               ),
               ),
-              Spacer(),
+              const Spacer(),
               IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.calendar_month_rounded,
                   color: Colors.white,
                 ),
@@ -56,27 +57,36 @@ class _HomePageState extends State<HomePage> {
                   showModalBottomSheet(
                     context: context,
                     builder: (BuildContext context) {
-                      return Padding(
-                        padding: const EdgeInsets.all(18.0), 
-                        child: Theme(
-                          data: ThemeData(
-                            primarySwatch: Colors.deepOrange,
-                            colorScheme: ColorScheme.light(primary: Color.fromARGB(255, 252, 71, 0)),
-                            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+                      return Container(
+                        decoration: const BoxDecoration(
+                          color: GColors.textPrimary,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(13),
+                            topRight: Radius.circular(13),
                           ),
-                          child: Container(
-                            height: 600, 
-                            decoration: BoxDecoration(
-                              color: Color(0xFFFFF2D8),
-                              borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(18.0), 
+                          child: Theme(
+                            data: ThemeData(
+                              primarySwatch: Colors.deepOrange,
+                              colorScheme: ColorScheme.light(primary: Color.fromARGB(255, 252, 71, 0)),
+                              buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
                             ),
-                            child: CalendarDatePicker(
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2100),
-                              onDateChanged: (selectedDate) {
-                                print('Tanggal dipilih: $selectedDate');
-                              },
+                            child: Container(
+                              height: 600, 
+                              decoration: const BoxDecoration(
+                                color: Color(0xFFFFF2D8),
+                                borderRadius: BorderRadius.all(Radius.circular(13)),
+                              ),
+                              child: CalendarDatePicker(
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2100),
+                                onDateChanged: (selectedDate) {
+                                  print('Tanggal dipilih: $selectedDate');
+                                },
+                              ),
                             ),
                           ),
                         ),
@@ -89,6 +99,12 @@ class _HomePageState extends State<HomePage> {
                 icon: Image.asset('assets/images/profile.png'),
                 iconSize: 20,
                 onPressed:(){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProfilePage()
+                    )
+                  );
                 }
               )
             ],
@@ -101,7 +117,7 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: Container(
               padding: const EdgeInsets.all(11),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color(0xFF3A4D39), 
               ),
               child: Padding(
@@ -117,14 +133,9 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (_, index){
                     return Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFFFFF2D8),
+                        color: const Color(0xFFFFF2D8),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      // child: Center(
-                      //   child: Text(
-                      //     data[index]
-                      //   ),
-                      // ),
                     );
                   }
                 ),

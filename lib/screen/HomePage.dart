@@ -1,5 +1,6 @@
 import 'package:dosify_app/screen/Profile.dart';
 import 'package:dosify_app/utils/constants/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart'; 
@@ -32,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   'logo1.png',
   'logo2.png',
   'logo3.png',
-];
+  ];
 
   String formattedDate = '';
 
@@ -43,13 +44,126 @@ class _HomePageState extends State<HomePage> {
     fetchDateAndTime();
   }
 
+  List<String> data = ["Travel", "Music", "Task"]; // template grid view builder di awal
+
+  void addNewList(String newListName) {
+  setState(() {
+    data.add(newListName);
+  });
+}
+
   void fetchDateAndTime() {
     var now = DateTime.now();
     var formatter = DateFormat('EEEE\nd MMMM', 'id_ID');
     formattedDate = formatter.format(now);
   }
 
-  List<String> data = ["Travel", "Music", "Task"]; // template grid view builder di awal
+  final List<Map<String, dynamic>> myProducts = List.generate(100000, (index) => {
+    "id": index,
+    "name": "Product $index",
+  }).toList();
+
+  void _showAddListModal(BuildContext context) {
+  TextEditingController _controller = TextEditingController();
+  FocusNode _focusNode = FocusNode();
+
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    builder: (BuildContext context) {
+      return ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(13),
+          topRight: Radius.circular(13),
+        ),
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.9,
+          decoration: BoxDecoration(
+            color: GColors.textPrimary,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(13),
+              topRight: Radius.circular(13),
+            ),
+          ),
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              AppBar(
+                backgroundColor: GColors.textPrimary,
+                title: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          FocusScope.of(context).unfocus();
+                          addNewList(_controller.text);
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          'Done',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: sizes.GSizes.fontSizeLg,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      Text(
+                        'Add List',
+                        style: const TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: sizes.GSizes.fontSizeLg,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.close,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          FocusScope.of(context).unfocus();
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                automaticallyImplyLeading: false,
+                elevation: 0,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 30),
+                child: TextField(
+                  controller: _controller,
+                  focusNode: _focusNode,
+                  autofocus: true, 
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your task',
+                    hintStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                    border: InputBorder.none,
+                  ),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: sizes.GSizes.fontSizeMd,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -182,6 +296,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton( // Tombol Floating
         onPressed: () {
+          _showAddListModal(context);
         },
         child: Icon(
           Icons.file_upload_outlined,

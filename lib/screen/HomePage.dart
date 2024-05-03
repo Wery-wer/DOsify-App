@@ -1,9 +1,11 @@
 import 'package:dosify_app/screen/Profile.dart';
 import 'package:dosify_app/utils/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart'; 
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:dosify_app/utils/constants/sizes.dart' as sizes;
+import 'dart:math';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,6 +15,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  final List<Map<String, dynamic>> gridMap = [
+    {
+      "title": "Travel"
+    },
+    {
+      "title": "Music"
+    },
+    {
+      "title": "Task"
+    },
+  ];
+
+  List<String> logoFileNames = [
+  'logo1.png',
+  'logo2.png',
+  'logo3.png',
+];
+
   String formattedDate = '';
 
   @override
@@ -28,7 +49,7 @@ class _HomePageState extends State<HomePage> {
     formattedDate = formatter.format(now);
   }
 
-  List<String> data = ["Item 1", "Item 2", "Item 3"]; // template grid view builder di awal
+  List<String> data = ["Travel", "Music", "Task"]; // template grid view builder di awal
 
   @override
   Widget build(BuildContext context) {
@@ -95,18 +116,6 @@ class _HomePageState extends State<HomePage> {
                   );
                 },
               ),
-              IconButton(
-                icon: Image.asset('assets/images/profile.png'),
-                iconSize: 20,
-                onPressed:(){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ProfilePage()
-                    )
-                  );
-                }
-              )
             ],
           ),
         ),
@@ -131,10 +140,37 @@ class _HomePageState extends State<HomePage> {
                   ), 
                   itemCount: data.length,
                   itemBuilder: (_, index){
+                    Random random = Random();
+                    String randomLogoFileName = logoFileNames[random.nextInt(logoFileNames.length)];
+                    String logoAssetPath = 'assets/logo/$randomLogoFileName';
                     return Container(
                       decoration: BoxDecoration(
                         color: const Color(0xFFFFF2D8),
                         borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 8.0,
+                            left: 8.0,
+                            child: Image.asset(
+                              logoAssetPath,
+                              width: 30,
+                              height: 30,
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 8.0,
+                            left: 8.0,
+                            child: Text(
+                              data[index],
+                              style: const TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 17,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     );
                   }
@@ -146,7 +182,6 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton( // Tombol Floating
         onPressed: () {
-          // Tambahkan logika yang diinginkan di sini
         },
         child: Icon(
           Icons.file_upload_outlined,

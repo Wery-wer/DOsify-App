@@ -164,7 +164,6 @@ class _HomePageState extends State<HomePage> {
   );
 }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -237,6 +236,31 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(    
         children: [ 
+          Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.only(left: 14,right: 14),
+            decoration: const BoxDecoration(
+              color: GColors.primaryBackground,
+            ),
+            child: TextField(
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: GColors.textTitle,
+                contentPadding: const EdgeInsets.symmetric(vertical: 1, horizontal: 1),
+                prefixIcon: Image.asset(
+                  'assets/images/search.png',
+                  width: 20,
+                  height: 20,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(
+                    color: Color(0xFF3A4D39),
+                  ),
+                ),
+              ),
+            ),
+          ),
           Expanded(
             child: Container(
               padding: const EdgeInsets.all(11),

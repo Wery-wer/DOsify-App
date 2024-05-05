@@ -58,10 +58,10 @@ class _HomePageState extends State<HomePage> {
     formattedDate = formatter.format(now);
   }
 
-  final List<Map<String, dynamic>> myProducts = List.generate(100000, (index) => {
-    "id": index,
-    "name": "Product $index",
-  }).toList();
+  // final List<Map<String, dynamic>> myProducts = List.generate(100000, (index) => {
+  //   "id": index,
+  //   "name": "Product $index",
+  // }).toList();
 
   void _showAddListModal(BuildContext context) {
   TextEditingController _controller = TextEditingController();
@@ -98,8 +98,35 @@ class _HomePageState extends State<HomePage> {
                       TextButton(
                         onPressed: () {
                           FocusScope.of(context).unfocus();
-                          addNewList(_controller.text);
-                          Navigator.pop(context);
+                          if (_controller.text.isNotEmpty){
+                            addNewList(_controller.text);
+                            Navigator.pop(context);
+                          } else {
+                            Navigator.pop(context);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Nama List Harus Di Isi',
+                                  style: TextStyle(
+                                    color: GColors.primaryBackground,
+                                    fontFamily: 'Poppins',
+                                    fontSize: sizes.GSizes.fontSizeMd,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                                backgroundColor: Color(0xFFFFF2D8),
+                                behavior: SnackBarBehavior.floating,
+                                action: SnackBarAction(
+                                  label: 'Dismiss',
+                                  disabledTextColor: Colors.white,
+                                  textColor: GColors.primaryBackground,
+                                  onPressed: () {
+                                    //Do whatever you want
+                                  },
+                                ),
+                              ),
+                            );
+                          }
                         },
                         child: Text(
                           'Done',
@@ -163,7 +190,104 @@ class _HomePageState extends State<HomePage> {
     },
   );
 }
+    
+  void _showAddTaskModal(BuildContext context) {
+  
+  FocusNode _focusNode = FocusNode();
 
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    builder: (BuildContext context) {
+      return ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(13),
+          topRight: Radius.circular(13),
+        ),
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.9,
+          decoration: BoxDecoration(
+            color: GColors.textPrimary,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(13),
+              topRight: Radius.circular(13),
+            ),
+          ),
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              AppBar(
+                backgroundColor: GColors.textPrimary,
+                title: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                        },
+                        child: Text(
+                          'Done',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: sizes.GSizes.fontSizeLg,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      Text(
+                        'Add List',
+                        style: const TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: sizes.GSizes.fontSizeLg,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.close,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          FocusScope.of(context).unfocus();
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                automaticallyImplyLeading: false,
+                elevation: 0,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 30),
+                child: TextField(
+                  // controller: _controller,
+                  focusNode: _focusNode,
+                  autofocus: true, 
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your task',
+                    hintStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                    border: InputBorder.none,
+                  ),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: sizes.GSizes.fontSizeMd,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -281,34 +405,39 @@ class _HomePageState extends State<HomePage> {
                     Random random = Random();
                     String randomLogoFileName = logoFileNames[random.nextInt(logoFileNames.length)];
                     String logoAssetPath = 'assets/logo/$randomLogoFileName';
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFFF2D8),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            top: 8.0,
-                            left: 8.0,
-                            child: Image.asset(
-                              logoAssetPath,
-                              width: 30,
-                              height: 30,
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 8.0,
-                            left: 8.0,
-                            child: Text(
-                              data[index],
-                              style: const TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 17,
+                    return GestureDetector(
+                      onTap: () {
+                        _showAddTaskModal(context);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFFF2D8),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              top: 8.0,
+                              left: 8.0,
+                              child: Image.asset(
+                                logoAssetPath,
+                                width: 30,
+                                height: 30,
                               ),
                             ),
-                          )
-                        ],
+                            Positioned(
+                              bottom: 8.0,
+                              left: 8.0,
+                              child: Text(
+                                data[index],
+                                style: const TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 17,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     );
                   }
@@ -329,6 +458,27 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Color(0xFF3A4D39),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat, // Letakkan tombol di bawah kiri
+    );
+  }
+}
+
+//ini buat konten item dari setiap yang dipilih
+class ItemContentWidget extends StatelessWidget{
+  final String data;
+  ItemContentWidget({required this.data});
+  
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(20.0),
+      child: Center(
+        child: Text(
+          data,
+          style: TextStyle(
+            fontSize: 22.0,
+          ),
+        ),
+      ),
     );
   }
 }

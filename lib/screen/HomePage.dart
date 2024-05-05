@@ -190,104 +190,7 @@ class _HomePageState extends State<HomePage> {
     },
   );
 }
-    
-  void _showAddTaskModal(BuildContext context) {
-  
-  FocusNode _focusNode = FocusNode();
 
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    builder: (BuildContext context) {
-      return ClipRRect(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(13),
-          topRight: Radius.circular(13),
-        ),
-        child: Container(
-          height: MediaQuery.of(context).size.height * 0.9,
-          decoration: BoxDecoration(
-            color: GColors.textPrimary,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(13),
-              topRight: Radius.circular(13),
-            ),
-          ),
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              AppBar(
-                backgroundColor: GColors.textPrimary,
-                title: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                        },
-                        child: Text(
-                          'Done',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: sizes.GSizes.fontSizeLg,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const Spacer(),
-                      Text(
-                        'Add List',
-                        style: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: sizes.GSizes.fontSizeLg,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.close,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          FocusScope.of(context).unfocus();
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                automaticallyImplyLeading: false,
-                elevation: 0,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 30),
-                child: TextField(
-                  // controller: _controller,
-                  focusNode: _focusNode,
-                  autofocus: true, 
-                  maxLines: null,
-                  decoration: InputDecoration(
-                    hintText: 'Enter your task',
-                    hintStyle: TextStyle(
-                      color: Colors.white,
-                    ),
-                    border: InputBorder.none,
-                  ),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: sizes.GSizes.fontSizeMd,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    },
-  );
-}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -407,7 +310,12 @@ class _HomePageState extends State<HomePage> {
                     String logoAssetPath = 'assets/logo/$randomLogoFileName';
                     return GestureDetector(
                       onTap: () {
-                        _showAddTaskModal(context);
+                        showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ItemContentWidget(data: data[index]);
+                        },
+                      );
                       },
                       child: Container(
                         decoration: BoxDecoration(

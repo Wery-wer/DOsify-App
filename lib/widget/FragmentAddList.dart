@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:dosify_app/utils/constants/sizes.dart' as sizes;
 
-class showaddListModal extends StatefulWidget {
+class FragmentAddList extends StatefulWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
-  const showaddListModal(
+  const FragmentAddList(
       {super.key, required this.controller, required this.focusNode});
 
   @override
-  State<showaddListModal> createState() => _showaddListModalState();
+  State<FragmentAddList> createState() => _FragmentAddListState();
 }
 
-class _showaddListModalState extends State<showaddListModal> {
+class _FragmentAddListState extends State<FragmentAddList> {
   // TextEditingController _controller = TextEditingController();
 
   void addNewList(String newListName) {
@@ -126,7 +126,7 @@ class _showaddListModalState extends State<showaddListModal> {
                 autofocus: true,
                 maxLines: null,
                 decoration: InputDecoration(
-                  hintText: 'Enter your task',
+                  hintText: 'Enter your list name',
                   hintStyle: TextStyle(
                     color: Colors.white,
                   ),
@@ -142,6 +142,5 @@ class _showaddListModalState extends State<showaddListModal> {
         ),
       ),
     );
-    ;
   }
 }

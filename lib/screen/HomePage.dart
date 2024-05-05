@@ -1,4 +1,3 @@
-import 'package:dosify_app/screen/Profile.dart';
 import 'package:dosify_app/utils/constants/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +5,9 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart'; 
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:dosify_app/utils/constants/sizes.dart' as sizes;
+import 'package:dosify_app/widget/FragmentAddList.dart';
+import 'package:dosify_app/widget/FragmentAddTask.dart';
+import 'package:dosify_app/screen/alertLogout.dart';
 import 'dart:math';
 
 class HomePage extends StatefulWidget {
@@ -16,6 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool? isChecked = false;
 
   final List<Map<String, dynamic>> gridMap = [
     {
@@ -43,14 +46,16 @@ class _HomePageState extends State<HomePage> {
     initializeDateFormatting();
     fetchDateAndTime();
   }
+  
+  void addNewList(String newListName) {
+    setState(() {
+      data.add(newListName);
+    });
+  }
 
   List<String> data = ["Travel", "Music", "Task"]; // template grid view builder di awal
+  List<String> _tasks = [];
 
-  void addNewList(String newListName) {
-  setState(() {
-    data.add(newListName);
-  });
-}
 
   void fetchDateAndTime() {
     var now = DateTime.now();
@@ -58,138 +63,160 @@ class _HomePageState extends State<HomePage> {
     formattedDate = formatter.format(now);
   }
 
-  // final List<Map<String, dynamic>> myProducts = List.generate(100000, (index) => {
-  //   "id": index,
-  //   "name": "Product $index",
-  // }).toList();
-
   void _showAddListModal(BuildContext context) {
-  TextEditingController _controller = TextEditingController();
-  FocusNode _focusNode = FocusNode();
+    TextEditingController _controller = TextEditingController();
+    FocusNode _focusNode = FocusNode();
 
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    builder: (BuildContext context) {
-      return ClipRRect(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(13),
-          topRight: Radius.circular(13),
-        ),
-        child: Container(
-          height: MediaQuery.of(context).size.height * 0.9,
-          decoration: BoxDecoration(
-            color: GColors.textPrimary,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(13),
-              topRight: Radius.circular(13),
-            ),
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return FragmentAddList(controller: _controller, focusNode: _focusNode);
+      },
+    );
+  }
+
+  void _showAddTaskModal(BuildContext context) {
+    TextEditingController controller = TextEditingController();
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(13),
+            topRight: Radius.circular(13),
           ),
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              AppBar(
-                backgroundColor: GColors.textPrimary,
-                title: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          FocusScope.of(context).unfocus();
-                          if (_controller.text.isNotEmpty){
-                            addNewList(_controller.text);
-                            Navigator.pop(context);
-                          } else {
-                            Navigator.pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Nama List Harus Di Isi',
-                                  style: TextStyle(
-                                    color: GColors.primaryBackground,
-                                    fontFamily: 'Poppins',
-                                    fontSize: sizes.GSizes.fontSizeMd,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                                backgroundColor: Color(0xFFFFF2D8),
-                                behavior: SnackBarBehavior.floating,
-                                action: SnackBarAction(
-                                  label: 'Dismiss',
-                                  disabledTextColor: Colors.white,
-                                  textColor: GColors.primaryBackground,
-                                  onPressed: () {
-                                    //Do whatever you want
-                                  },
-                                ),
-                              ),
-                            );
-                          }
-                        },
-                        child: Text(
-                          'Done',
-                          style: TextStyle(
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.9,
+            decoration: BoxDecoration(
+              color: GColors.textPrimary,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(13),
+                topRight: Radius.circular(13),
+              ),
+            ),
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                AppBar(
+                  backgroundColor: GColors.textPrimary,
+                  title: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Spacer(),
+                        Text(
+                          'Add Task', 
+                          style: const TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: sizes.GSizes.fontSizeLg,
                             color: Colors.white,
+                            fontSize: 17,
                           ),
                         ),
-                      ),
-                      const Spacer(),
-                      Text(
-                        'Add List',
-                        style: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: sizes.GSizes.fontSizeLg,
-                          color: Colors.white,
+                        const Spacer(),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.close,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            FocusScope.of(context).unfocus();
+                            Navigator.pop(context);
+                          },
                         ),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.close,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          FocusScope.of(context).unfocus();
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                automaticallyImplyLeading: false,
-                elevation: 0,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 30),
-                child: TextField(
-                  controller: _controller,
-                  focusNode: _focusNode,
-                  autofocus: true, 
-                  maxLines: null,
-                  decoration: InputDecoration(
-                    hintText: 'Enter your task',
-                    hintStyle: TextStyle(
-                      color: Colors.white,
+                      ],
                     ),
-                    border: InputBorder.none,
                   ),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: sizes.GSizes.fontSizeMd,
+                  automaticallyImplyLeading: false,
+                  elevation: 0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: TextField(
+                    controller: controller,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      hintText: 'Enter your task',
+                      hintStyle: TextStyle(
+                        color: Colors.white,
+                      ),
+                      border: InputBorder.none,
+                    ),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: sizes.GSizes.fontSizeMd,
+                    ),
                   ),
                 ),
-              ),
-            ],
+                ..._tasks.map((task) => Row(
+                      children: [
+                        Checkbox(
+                          value: true, // Atur nilai checkbox sesuai dengan keadaan tugas
+                          onChanged: (newValue) {
+                            // Perbarui keadaan tugas
+                          },
+                        ),
+                        Expanded(
+                          child: Text(
+                            task,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: sizes.GSizes.fontSizeMd,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )).toList(),
+                SizedBox(height: 520),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const alertLogout();
+                          }
+                        );
+                      },
+                      child: Text(
+                        'Delete List',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 16,
+                          color: Color(0xffECE3CE),
+                        ),
+                      ),
+                    ),
+                    FloatingActionButton( 
+                      onPressed: () {
+                        setState(() {
+                              // Simpan task yang ditulis di dalam TextField ke dalam daftar
+                              _tasks.add(controller.text);
+                              // Kosongkan TextField setelah menyimpan tugas
+                              controller.clear();
+                            });
+                      },
+                      child: Image.asset(
+                        'assets/images/plus.png',
+                        width: 20,
+                        height: 20,
+                      ),
+                      backgroundColor: GColors.fourht,
+                    ),
+                ],
+                ),
+              ],
+            ),
           ),
-        ),
-      );
-    },
-  );
-}
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -310,13 +337,8 @@ class _HomePageState extends State<HomePage> {
                     String logoAssetPath = 'assets/logo/$randomLogoFileName';
                     return GestureDetector(
                       onTap: () {
-                        showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return ItemContentWidget(data: data[index]);
-                        },
-                      );
-                      },
+                        _showAddTaskModal(context);
+                    },
                       child: Container(
                         decoration: BoxDecoration(
                           color: const Color(0xFFFFF2D8),
@@ -370,7 +392,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-//ini buat konten item dari setiap yang dipilih
+//ini menampilkan nama yang sesuai dengan nama list dengan nama appbar nya tapi kayanya ga kepake
 class ItemContentWidget extends StatelessWidget{
   final String data;
   ItemContentWidget({required this.data});

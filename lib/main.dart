@@ -1,5 +1,6 @@
 import 'package:dosify_app/screen/HomePage.dart';
 import 'package:dosify_app/screen/Login.dart';
+import 'package:dosify_app/screen/Profile.dart';
 import 'package:dosify_app/screen/Registrasi.dart';
 import 'package:dosify_app/screen/splashscreen.dart';
 import 'package:flutter/material.dart';
